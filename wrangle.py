@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import datetime
 
+import os
+
 def acquire_data():
     
     if os.path.isfile('./311data.csv') == True:
