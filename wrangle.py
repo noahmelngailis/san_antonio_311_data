@@ -58,3 +58,36 @@ def change_column_names(df):
     df = df.rename(columns=d)
     
     return df    
+
+def format_coords(df):
+    """properly formats `xcoord` and `ycoord` columns into strings"""
+
+    df.xcoord = df.xcoord.map(lambda x: '{:.0f}'.format(x))
+    df.ycoord = df.ycoord.map(lambda x: '{:.0f}'.format(x))
+    
+    return df
+
+def prep_bool(df):
+    """takes binary columns that are not in bool format and turns them into booleans"""
+    
+    df['is_late'] = df['late_(yes/no)'] == "YES"
+    df['is_closed'] = df['casestatus'] == "Closed"
+    
+    df.drop(columns=(['late_(yes/no)', 'casestatus']), inplace=True)
+    
+    return df
+    
+def preprocessing(df):
+    """master function for all preprocessing functions"""
+    
+    df = change_data_types(df)
+    
+    df = change_column_names(df)
+    
+    df = format_coords(df)
+    
+    df = prep_bool(df)
+    
+    return df
+    
+    
